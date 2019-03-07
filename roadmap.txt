@@ -1,0 +1,17 @@
+initial thoughts/plan
+
+data sets - can use existing.
+ - switch to Tal's alternative set w/ more info?
+ 
+ analysis 
+ - much of this is already done. develop further, change if needed (especially if we're switching data sets)
+ 
+ app
+ - shiny
+ - interactive map
+ - allow for comparisons per country and region
+ 
+ figure out maps/graphs to display
+ - focus on presentation
+ 
+ make sure to answer initial questions
