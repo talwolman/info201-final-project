@@ -22,7 +22,7 @@ ui <- fluidPage(
                           h1("Title of Page"),
                           p("an introduction to the question you are asking"),
                           # insert your plot call here
-                          # insert and widgets you will need 
+                          # insert the widgets you will need 
                           p("a GOOD and GRAMMATICALLY CORRECT description of your plot"),
                           p("make sure you format and explain what can be done w the widgets")
                           ),
@@ -31,7 +31,7 @@ ui <- fluidPage(
                           h1("Title of Page"),
                           p("an introduction to the question you are asking"),
                           # insert your plot call here
-                          # insert and widgets you will need 
+                          # insert the widgets you will need 
                           p("a GOOD and GRAMMATICALLY CORRECT description of your plot"),
                           p("make sure you format and explain what can be done w the widgets")
                           ),
@@ -40,7 +40,7 @@ ui <- fluidPage(
                           h1("Title of Page"),
                           p("an introduction to the question you are asking"),
                           # insert your plot call here
-                          # insert and widgets you will need 
+                          # insert the widgets you will need 
                           p("a GOOD and GRAMMATICALLY CORRECT description of your plot"),
                           p("make sure you format and explain what can be done w the widgets")
                           ),
@@ -49,7 +49,7 @@ ui <- fluidPage(
                           h1("Title of Page"),
                           p("an introduction to the question you are asking"),
                           # insert your plot call here
-                          # insert and widgets you will need 
+                          # insert the widgets you will need 
                           p("a GOOD and GRAMMATICALLY CORRECT description of your plot"),
                           p("make sure you format and explain what can be done w the widgets")
                           )
