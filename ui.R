@@ -24,7 +24,7 @@ ui <- fluidPage(
                           # insert your plot call here
                           # insert and widgets you will need 
                           p("a GOOD and GRAMMATICALLY CORRECT description of your plot"),
-                          p("make sure you add formatting and explain what can be done w the widgets")
+                          p("make sure you format and explain what can be done w the widgets")
                           ),
                 
                  tabPanel("Ben", 
@@ -33,7 +33,7 @@ ui <- fluidPage(
                           # insert your plot call here
                           # insert and widgets you will need 
                           p("a GOOD and GRAMMATICALLY CORRECT description of your plot"),
-                          p("make sure you add formatting and explain what can be done w the widgets")
+                          p("make sure you format and explain what can be done w the widgets")
                           ),
                 
                  tabPanel("Ivan", 
@@ -42,7 +42,7 @@ ui <- fluidPage(
                           # insert your plot call here
                           # insert and widgets you will need 
                           p("a GOOD and GRAMMATICALLY CORRECT description of your plot"),
-                          p("make sure you add formatting and explain what can be done w the widgets")
+                          p("make sure you format and explain what can be done w the widgets")
                           ),
                 
                  tabPanel("Cooper", 
@@ -51,7 +51,7 @@ ui <- fluidPage(
                           # insert your plot call here
                           # insert and widgets you will need 
                           p("a GOOD and GRAMMATICALLY CORRECT description of your plot"),
-                          p("make sure you add formatting and explain what can be done w the widgets")
+                          p("make sure you format and explain what can be done w the widgets")
                           )
                  
                  )
