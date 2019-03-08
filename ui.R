@@ -7,13 +7,14 @@
 library("shiny")
 
 ui <- fluidPage(
-  titlePanel("title of project"),
+  titlePanel("Title of Project"),
   
   mainPanel(
     tabsetPanel(type = "tabs",
                  # CHANGE THE NAME OF YOUR TAB TO BE ABOUT YOUR TOPIC!!!!! 
                  tabPanel("Home",
                           h1("Title of Page"),
+                          p("Tal Wolman, Ben Weber, Ivan Trindev, Cooper Teixeira"),
                           p("a GOOD and GRAMMATICALLY CORRECT description of our project")
                           ),
                 
@@ -22,7 +23,8 @@ ui <- fluidPage(
                           p("an introduction to the question you are asking"),
                           # insert your plot call here
                           # insert and widgets you will need 
-                          p("a GOOD and GRAMMATICALLY CORRECT description of your plot")
+                          p("a GOOD and GRAMMATICALLY CORRECT description of your plot"),
+                          p("make sure you add formatting and explain what can be done w the widgets")
                           ),
                 
                  tabPanel("Ben", 
@@ -30,7 +32,8 @@ ui <- fluidPage(
                           p("an introduction to the question you are asking"),
                           # insert your plot call here
                           # insert and widgets you will need 
-                          p("a GOOD and GRAMMATICALLY CORRECT description of your plot")
+                          p("a GOOD and GRAMMATICALLY CORRECT description of your plot"),
+                          p("make sure you add formatting and explain what can be done w the widgets")
                           ),
                 
                  tabPanel("Ivan", 
@@ -38,7 +41,8 @@ ui <- fluidPage(
                           p("an introduction to the question you are asking"),
                           # insert your plot call here
                           # insert and widgets you will need 
-                          p("a GOOD and GRAMMATICALLY CORRECT description of your plot")
+                          p("a GOOD and GRAMMATICALLY CORRECT description of your plot"),
+                          p("make sure you add formatting and explain what can be done w the widgets")
                           ),
                 
                  tabPanel("Cooper", 
@@ -46,7 +50,8 @@ ui <- fluidPage(
                           p("an introduction to the question you are asking"),
                           # insert your plot call here
                           # insert and widgets you will need 
-                          p("a GOOD and GRAMMATICALLY CORRECT description of your plot")
+                          p("a GOOD and GRAMMATICALLY CORRECT description of your plot"),
+                          p("make sure you add formatting and explain what can be done w the widgets")
                           )
                  
                  )
