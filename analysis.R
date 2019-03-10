@@ -9,12 +9,24 @@ library(knitr)
 library(jsonlite)
 library(httr)
 
-# Get crucial information from the world happiness data set
-world_happiness_crucial_info <- world_happiness_data %>%
-  select(
-    Country, Happiness.Score, Economy..GDP.per.Capita., Family, Health..Life.Expectancy.,
-    Freedom, Generosity, Trust..Government.Corruption.
-  )
+# read and process csv file for happiness data
+world_happiness_data <- read.csv(file = "Data/2017.csv", stringsAsFactors = FALSE)
+filtered_world_happiness_data <- select(world_happiness_data, Country, Happiness.Rank, Happiness.Score, Economy..GDP.per.Capita.) %>%
+  filter(Happiness.Score > 7)
+happiness_col_names <- c("Country Name", "Happiness Rank", "Happiness Score", "Economy")
+colnames(filtered_world_happiness_data) <- happiness_col_names
+
+# read and process data from World Bank by fetching from API
+base_uri <- "http://api.worldbank.org/v2/"
+response <- GET(paste0(base_uri, "country"), query = list("format" = "json", "per_page" = "350"))
+response_information <- content(response, "text")
+parsed_body_information <- fromJSON(response_information)
+data_for_world <- flatten(parsed_body_information[[2]]) %>% filter(!grepl("Aggregates", region.value))
+filtered_data_for_europe_central_asia <- select(data_for_world, id, name, region.value, incomeLevel.value) %>%
+  filter(region.value == "Europe & Central Asia")
+europe_asia_col_names <- c("ID", "Country Name", "Region Name", "Income Level")
+colnames(filtered_data_for_europe_central_asia) <- europe_asia_col_names
+
 
 # Change colnames in data set
 world_happiness_crucial_col_names <- c("Country", "Score", "Economy", "Family", "Health", "Freedom", "Generosity", "Gov.Trust")

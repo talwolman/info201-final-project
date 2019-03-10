@@ -18,11 +18,19 @@ ui <- fluidPage(
                           p("a GOOD and GRAMMATICALLY CORRECT description of our project")
                           ),
                 
-                 tabPanel("Tal",
-                          h1("Title of Page"),
-                          p("an introduction to the question you are asking"),
-                          # insert your plot call here
-                          # insert the widgets you will need 
+                 tabPanel("Economic Changes vs. Happiness",
+                          h1("A Comparison of Economic Changes and Dramatic Shifts in Happiness"),
+                          p("We were first interested to see if there is any consistent relationship between countries
+                            that experienced large changes in economic levels and in their overall happiness index. Use the widgets
+                            below to manipulate the visualizations."),
+                          br(), 
+                          sliderInput("countries", 
+                                      "Choose the # of Countries to Include",
+                                      value = 5,
+                                      min = 1,
+                                      max = 10),
+                          plotOutput("plot1"),
+                          plotOutput("plot2"),
                           p("a GOOD and GRAMMATICALLY CORRECT description of your plot"),
                           p("make sure you format and explain what can be done w the widgets")
                           ),
@@ -53,9 +61,6 @@ ui <- fluidPage(
                           p("a GOOD and GRAMMATICALLY CORRECT description of your plot"),
                           p("make sure you format and explain what can be done w the widgets")
                           )
-                 
                  )
-  
-    
   )
 )
