@@ -25,18 +25,20 @@ ui <- fluidPage(
                               that experienced large changes in economic levels and in their overall happiness index. Use the widgets
                               below to manipulate the visualizations."),
                br(), 
+               h4("A Comparison of the Countries w/ Top Economic Changes (left) and Top Changes in Happiness (right)"), 
                sliderInput("countries", 
                            "Choose the # of Countries to Include",
                            value = 5,
                            min = 1,
                            max = 10),
-               grid.arrange(plotOutput("map1"), plotOutput("map1"), nrow = 1),
-               # h4("title 1"),
-               # plotOutput("map1"),
-               # h4("title 2"),
-               # plotOutput("map1"),
-               p("a GOOD and GRAMMATICALLY CORRECT description of your plot"),
-               p("make sure you format and explain what can be done w the widgets")
+               p("choose how many countries to include by using the slider above. The number that you choose will indicate how many countries
+                 will be highlighted on both maps."),
+               plotOutput("mapcomparison"),
+               p("As can be seen in the maps, there is quite a bit of consistency between countries that have drastic changes in their economic
+                 status and changes in their happiness index. As the slider is used, the map on the left and the right are nearly identical.
+                 Using this alone is not a valid means of declaring that the two are directly associated, but it gives us good reason to 
+                 investigate a possible relationship. This pattern is one that many people would likely anticipate given that associating
+                 doing well and happiness is common.")
       ),
                 
       tabPanel("Ben", 

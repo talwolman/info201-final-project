@@ -26,7 +26,8 @@ server <- function(input, output) {
   }
   
   # Tal - add description of code 
-  output$map1 <- renderPlot({
+  output$mapcomparison <- renderPlot({
+    # economy map filtering
     largest_economy_change <- world_happiness_2015_2017 %>%
       arrange(abs(Economy_change)) %>%
       top_n(input$countries) %>%
@@ -36,14 +37,14 @@ server <- function(input, output) {
     
     mapping_data <- get_world_data_with_highlights(largest_economy_change)
     
-    ggplot() +
+    # economy map generation 
+    economy_map <- ggplot() +
       geom_map(data = mapping_data,
                map = mapping_data,
-               aes(x = long, y = lat, group = group, map_id = region, fill = highlight)) +
-      theme(legend.position = "none") + coord_fixed(ratio = 1)
-  })
-  
-  output$map2 <- renderPlot({
+               aes(x = long, y = lat, group = group, map_id = region, fill = highlight, color = "green")) +
+      theme(legend.position = "none") 
+    
+    # happiness map filtering 
     largest_happiness_change <- world_happiness_2015_2017 %>%
       arrange(abs(Happiness_change)) %>%
       top_n(input$countries) %>%
@@ -53,11 +54,15 @@ server <- function(input, output) {
     
     mapping_data <- get_world_data_with_highlights(largest_happiness_change)
     
-    ggplot() +
+    # happiness map generation
+    happiness_map <- ggplot() +
       geom_map(data = mapping_data,
                map = mapping_data,
-               aes(x = long, y = lat, group = group, map_id = region, fill = highlight)) +
-      theme(legend.position = "none") + coord_fixed(ratio = 1)
+               aes(x = long, y = lat, group = group, map_id = region, fill = highlight, color = "green")) +
+      theme(legend.position = "none") 
+    
+    # arranging the maps side by side 
+    grid.arrange(economy_map, happiness_map, nrow = 1)
   })
   
   # Ben - add description of code 
