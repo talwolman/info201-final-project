@@ -27,31 +27,6 @@ server <- function(input, output) {
   
   # Tal - add description of code 
   output$map1 <- renderPlot({
-    
-    # get_world_data_with_highlights <- function(regions_highlight) {
-    #   map_data('world') %>% 
-    #     fortify() %>% 
-    #     mutate(highlight = ifelse(region %in% regions_highlight, 1, 0))
-    # }
-    
-    largest_happiness_change <- world_happiness_2015_2017 %>%
-      arrange(abs(Happiness_change)) %>%
-      top_n(input$countries) %>%
-      select(Country) 
-    
-    largest_happiness_change <- unlist(largest_happiness_change)
-   
-    mapping_data <- get_world_data_with_highlights(largest_happiness_change)
-    
-    ggplot() +
-      geom_map(data = mapping_data,
-               map = mapping_data,
-               aes(x = long, y = lat, group = group, map_id = region, fill = highlight)) +
-      theme(legend.position = "none")
-
-  })
-  
-  output$map2 <- renderPlot({
     largest_economy_change <- world_happiness_2015_2017 %>%
       arrange(abs(Economy_change)) %>%
       top_n(input$countries) %>%
@@ -65,7 +40,24 @@ server <- function(input, output) {
       geom_map(data = mapping_data,
                map = mapping_data,
                aes(x = long, y = lat, group = group, map_id = region, fill = highlight)) +
-      theme(legend.position = "none")
+      theme(legend.position = "none") + coord_fixed(ratio = 1)
+  })
+  
+  output$map2 <- renderPlot({
+    largest_happiness_change <- world_happiness_2015_2017 %>%
+      arrange(abs(Happiness_change)) %>%
+      top_n(input$countries) %>%
+      select(Country) 
+    
+    largest_happiness_change <- unlist(largest_happiness_change)
+    
+    mapping_data <- get_world_data_with_highlights(largest_happiness_change)
+    
+    ggplot() +
+      geom_map(data = mapping_data,
+               map = mapping_data,
+               aes(x = long, y = lat, group = group, map_id = region, fill = highlight)) +
+      theme(legend.position = "none") + coord_fixed(ratio = 1)
   })
   
   # Ben - add description of code 
