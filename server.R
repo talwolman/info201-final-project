@@ -66,9 +66,6 @@ server <- function(input, output) {
                map = mapping_data,
                aes(x = long, y = lat, group = group, map_id = region, fill = highlight)) +
       theme(legend.position = "none")
-    
-    
-
   })
   
   # Ben - add description of code 
