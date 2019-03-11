@@ -14,9 +14,16 @@ ui <- fluidPage(
     tabsetPanel(type = "tabs",
     # CHANGE THE NAME OF YOUR TAB TO BE ABOUT YOUR TOPIC!!!!! 
       tabPanel("Home",
-               h1("Title of Page"),
+               h1("An Overview:"),
                p("Tal Wolman, Ben Weber, Ivan Trindev, Cooper Teixeira"),
-               p("a GOOD and GRAMMATICALLY CORRECT description of our project")
+               p("We are analyzing two seperate data sets: a World Happiness Index and a World Bank Data. The World Happiness Index is a 
+                  list of different aspects that are viewed to lead to happiness. These include life expectancy, freedom, generosity,
+                  trust in the government, and dystopia residual (a comparison to an imaginary country of the world’s least happy people).
+                  The scores in each of these criteria are then used to determine an overall happiness score for each country. We are then 
+                  going to compare this data to World Bank information about median income, economic wealth, and other such financial data 
+                  in order to ascertain if money can indeed lead to happiness."),
+               br(),
+               p("will come back here")
       ),
                 
       tabPanel("Economic Changes vs. Happiness",
