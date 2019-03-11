@@ -29,8 +29,8 @@ ui <- fluidPage(
                                       value = 5,
                                       min = 1,
                                       max = 10),
-                          plotOutput("plot1"),
-                          plotOutput("plot2"),
+                          plotOutput("map1"),
+                          plotOutput("map2"),
                           p("a GOOD and GRAMMATICALLY CORRECT description of your plot"),
                           p("make sure you format and explain what can be done w the widgets")
                           ),

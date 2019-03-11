@@ -99,3 +99,4 @@ largest_economy_change <- world_happiness_2015_2017 %>%
   top_n(5) %>%
   select(Country) %>%
   as.vector()
+
