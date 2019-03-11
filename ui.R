@@ -5,6 +5,7 @@
 # March 8, 2019 
 
 library("shiny")
+library("gridExtra")
 
 ui <- fluidPage(
   titlePanel("Title of Project"),
@@ -29,8 +30,11 @@ ui <- fluidPage(
                            value = 5,
                            min = 1,
                            max = 10),
-               plotOutput("map1"),
-               plotOutput("map2"),
+               grid.arrange(plotOutput("map1"), plotOutput("map1"), nrow = 1),
+               # h4("title 1"),
+               # plotOutput("map1"),
+               # h4("title 2"),
+               # plotOutput("map1"),
                p("a GOOD and GRAMMATICALLY CORRECT description of your plot"),
                p("make sure you format and explain what can be done w the widgets")
       ),
