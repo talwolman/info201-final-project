@@ -1,13 +1,11 @@
-# Tal Wolman, Ben Weber, Ivan Trindev, Cooper Teixeira
-# INFO 201 Final Project
-# TA: Andrey Butenko 
-# Section AE
-# March 8, 2019 
-
 library(dplyr)
 library(knitr)
 library(jsonlite)
 library(httr)
+
+###############
+## Section 2 ##
+###############
 
 # read and process csv file for happiness data
 world_happiness_data <- read.csv(file = "Data/2017.csv", stringsAsFactors = FALSE)
@@ -27,6 +25,16 @@ filtered_data_for_europe_central_asia <- select(data_for_world, id, name, region
 europe_asia_col_names <- c("ID", "Country Name", "Region Name", "Income Level")
 colnames(filtered_data_for_europe_central_asia) <- europe_asia_col_names
 
+###############
+## Section 3 ##
+###############
+
+# Get crucial information from the world happiness data set
+world_happiness_crucial_info <- world_happiness_data %>%
+  select(
+    Country, Happiness.Score, Economy..GDP.per.Capita., Family, Health..Life.Expectancy.,
+    Freedom, Generosity, Trust..Government.Corruption.
+  )
 
 # Change colnames in data set
 world_happiness_crucial_col_names <- c("Country", "Score", "Economy", "Family", "Health", "Freedom", "Generosity", "Gov.Trust")
@@ -37,15 +45,15 @@ world_happiness_summary <- summary(world_happiness_crucial_info %>% select(-Coun
 
 # Create a numeric representation of the income levels of countries
 data_for_world_ex <- data_for_world %>% mutate(income_as_numeric = ifelse(grepl("HIC", incomeLevel.id), "6",
-  ifelse(grepl("UMC", incomeLevel.id), 5,
-    ifelse(grepl("MIC", incomeLevel.id), 4,
-      ifelse(grepl("LMC", incomeLevel.id), 3,
-        ifelse(grepl("LMY", incomeLevel.id), 2,
-          ifelse(grepl("LIC", incomeLevel.id), 1, NA)
-        )
-      )
-    )
-  )
+                                                                          ifelse(grepl("UMC", incomeLevel.id), 5,
+                                                                                 ifelse(grepl("MIC", incomeLevel.id), 4,
+                                                                                        ifelse(grepl("LMC", incomeLevel.id), 3,
+                                                                                               ifelse(grepl("LMY", incomeLevel.id), 2,
+                                                                                                      ifelse(grepl("LIC", incomeLevel.id), 1, NA)
+                                                                                               )
+                                                                                        )
+                                                                                 )
+                                                                          )
 ))
 data_for_world_ex$income_as_numeric <- as.numeric(data_for_world_ex$income_as_numeric)
 world_income_summary <- summary(data_for_world_ex %>% select(income_as_numeric) %>% na.omit())
@@ -99,4 +107,3 @@ largest_economy_change <- world_happiness_2015_2017 %>%
   top_n(5) %>%
   select(Country) %>%
   as.vector()
-
