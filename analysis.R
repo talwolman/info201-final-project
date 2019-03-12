@@ -113,3 +113,25 @@ largest_economy_change <- world_happiness_2015_2017 %>%
   top_n(5) %>%
   select(Country) %>%
   as.vector()
+
+# select and rename necessary columns for 2015 happiness data
+happiness_2015 <- read.csv("data/2015.csv", stringsAsFactors = F) %>% 
+    select(Country, Region, Happiness.Score, Economy..GDP.per.Capita.)
+cols_2015 <- c("country", "region", "happiness_2015", "economy_2015")
+colnames(happiness_2015) <- cols_2015
+    
+# select and rename necessary columns for 2016 happiness data
+happiness_2016 <- read.csv("data/2016.csv", stringsAsFactors = F) %>% 
+    select(Country, Happiness.Score, Economy..GDP.per.Capita.)
+cols_2016 <- c("country", "happiness_2016", "economy_2016")
+colnames(happiness_2016) <- cols_2016
+    
+# select and rename necessary columns for 2017 happiness data
+happiness_2017 <- read.csv("data/2017.csv", stringsAsFactors = F) %>% 
+    select(Country, Happiness.Score, Economy..GDP.per.Capita.)
+cols_2017 <- c("country", "happiness_2017", "economy_2017")
+colnames(happiness_2017) <- cols_2017
+
+# join data for 2015, 2016, and 2017
+wealth_vs_happiness <- left_join(happiness_2015, happiness_2016, by = "country")
+wealth_vs_happiness <- left_join(wealth_vs_happiness, happiness_2017, by = "country")

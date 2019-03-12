@@ -68,6 +68,30 @@ server <- function(input, output) {
   # Ben - add description of code 
   # add code here and delete this comment
   
+  output$wealth_happy_correl <- renderPlot({
+      
+      years <- input$correl_years
+      point_size <- input$correl_point_size
+      plot <- ggplot(wealth_vs_happiness)
+      
+      
+      if ("2015" %in% years) {
+          plot = plot + geom_point(aes(x = economy_2015, y = happiness_2015, color = region), shape = 15, size = point_size)
+      }
+      
+      if ("2016" %in% years) {
+          plot = plot + geom_point(aes(x = economy_2016, y = happiness_2016, color = region), shape = 15, size = point_size)
+      }
+
+      if ("2017" %in% years) {
+          plot = plot + geom_point(aes(x = economy_2017, y = happiness_2017, color = region), shape = 15, size = point_size)
+      }
+      
+      plot + ggtitle(paste0("Wealth vs. Happiness")) + 
+          labs(x = "Economy (GDP Per Capita)", y = "Happiness Score") +
+          scale_color_discrete(name = "Regions")
+  })
+  
   # Ivan - add description of code 
   # add code here and delete this comment
   
