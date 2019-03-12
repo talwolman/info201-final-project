@@ -101,7 +101,7 @@ server <- function(input, output) {
       group_by(incomeLevel.value) %>%
       summarize(average_happiness = mean(Score)) %>%
       mutate(incomeLevel.value = c("Low", "Lower Middle", "Upper Middle", "High")) %>%
-      mutate(group = "GDP")
+      mutate(group = "GDP per Capita")
     world_happiness_econ$incomeLevel.value <- factor(world_happiness_econ$incomeLevel.value, levels = c("Low", "Lower Middle", "Upper Middle", "High")) 
     
     average_happiness_by_income_level <- average_happiness_by_income_level %>%

@@ -91,8 +91,12 @@ ui <- fluidPage(
                                               "GDP per Capita Bracket" = "GDP")),
                plotOutput("wealth_graph"),
                # insert the widgets you will need 
-               p("a GOOD and GRAMMATICALLY CORRECT description of your plot"),
-               p("make sure you format and explain what can be done w the widgets")
+               p("The above graph is set up as a line graph because despite the fact that the data is broken up into discrete brackets, 
+                          the data within the brackets is continuous; within each bracket there is a continuous average income and/or conintuous 
+                          GDP per capita. As can be seen by the graph above, happiness increases with both income level and with GDP per capita. However, 
+                          one very interesting things can be seen when the two are compared. The happiness levels for GDP per capita is lower than for 
+                          income on the low/lower middle side, and higher on the higher middle/high side. This could potentially demonstrate that national 
+                          wealth is more important when it comes to average happiness than personal wealth.")
       ),
                 
       tabPanel("Cooper", 
