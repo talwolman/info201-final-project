@@ -69,8 +69,54 @@ server <- function(input, output) {
   # add code here and delete this comment
   
   # Ivan - add description of code 
-  # add code here and delete this comment
+  output$wealth_graph <- renderPlot({
+    
+    world_happiness_econ <- world_happiness_crucial_info %>%
+      select(Score, Economy) %>%
+      mutate(incomeLevel.value = cut(as.vector(world_happiness_crucial_info$Economy), 4)) %>%
+      group_by(incomeLevel.value) %>%
+      summarize(average_happiness = mean(Score)) %>%
+      mutate(incomeLevel.value = c("Low", "Lower Middle", "Upper Middle", "High")) %>%
+      mutate(group = "GDP")
+    world_happiness_econ$incomeLevel.value <- factor(world_happiness_econ$incomeLevel.value, levels = c("Low", "Lower Middle", "Upper Middle", "High")) 
+    
+    average_happiness_by_income_level <- average_happiness_by_income_level %>%
+      mutate(group = "Income") %>%
+      mutate(incomeLevel.value = c("Low", "Lower Middle", "Upper Middle", "High"))
+    average_happiness_by_income_level$incomeLevel.value <- factor(average_happiness_by_income_level$incomeLevel.value, levels = c("Low", "Lower Middle", "Upper Middle", "High"))
+    
+    income_and_econ <- rbind(average_happiness_by_income_level, world_happiness_econ)
+    
+    if (length(input$wealth_type) == 1 & input$wealth_type == "in"){
+      ggplot(data = average_happiness_by_income_level, aes(x = incomeLevel.value, y = average_happiness, group = group)) +
+        geom_point() + geom_line() +
+        labs(
+          title = "Income Bracket vs. Happiness",
+          x = "Income Bracket",
+          y = "Average Happiness"
+        )
+      
+    } else if (length(input$wealth_type) == 1 & input$wealth_type == "GDP") {
+      ggplot(data = world_happiness_econ, aes(x = incomeLevel.value, y = average_happiness, group = group)) +
+        geom_point() + geom_line() +
+        labs(
+          title = "GDP per Capita vs. Happiness",
+          x = "GDP per Capita Bracket",
+          y = "Average Happiness"
+        )
+    } else {
+      ggplot(data = income_and_econ, aes(x = incomeLevel.value, y = average_happiness, color = group, group = group)) +
+        geom_point() + geom_line() +
+        labs(
+          title = "Income Bracket & GDP per Capita vs. Happiness",
+          color = "Wealth Type",
+          x = "Income/GDP per Capita Bracket",
+          y = "Average Happiness"
+        )
+    }
+  })
   
   # Cooper - add description of code 
   # add code here and delete this comment
 }
+

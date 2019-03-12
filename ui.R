@@ -57,10 +57,18 @@ ui <- fluidPage(
                p("make sure you format and explain what can be done w the widgets")
       ),
                 
-      tabPanel("Ivan", 
-               h1("Title of Page"),
-               p("an introduction to the question you are asking"),
-               # insert your plot call here
+      tabPanel("Income/GDP per Capita vs. Happiness", 
+               h1("A comparison of Average Income & GDP Per Capita to Happiness Levels"),
+               p("One of the things that we were most interested in investigating involved testing the old saying 'Money can't buy you happiness.'
+                          We wanted to test this when it comes to both personal wealth (Income) and national wealth (GDP per Capita). 
+                          Use the widget below to chose whether you want to see a comparison between income bracket and happiness 
+                          or GDP per capita and happiness."),
+               br(),
+               checkboxGroupInput(inputId = "wealth_type",
+                                  label = "Choose wealth type:",
+                                  choices = c("Income Bracket" = "in",
+                                              "GDP per Capita Bracket" = "GDP")),
+               plotOutput("wealth_graph"),
                # insert the widgets you will need 
                p("a GOOD and GRAMMATICALLY CORRECT description of your plot"),
                p("make sure you format and explain what can be done w the widgets")
