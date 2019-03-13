@@ -11,7 +11,7 @@ ui <- fluidPage(
   titlePanel("Title of Project"),
   
   mainPanel(
-    tabsetPanel(type = "tabs",
+    tabsetPanel(type = "pills",
     # CHANGE THE NAME OF YOUR TAB TO BE ABOUT YOUR TOPIC!!!!! 
       tabPanel("Home",
                h1("An Overview:"),
@@ -50,32 +50,36 @@ ui <- fluidPage(
                 
       tabPanel("Wealth vs. Happiness", 
                h1("Relationship Between Countries' GDP Per Capita and Self-Reported Happiness Level"),
-               p("an introduction to the question you are asking"),
-               
-               
-               # insert your plot call here
-               # insert the widgets you will need 
+               p("It is a common thought that money tends to lead to happiness. For this project, we were able to 
+                 analyze data for the world's wealth as well as happiness levels, which allowed us to review
+                 the data and see if there exists a relationship between wealth and happiness. The measuement of
+                 wealth is the country's GDP per capita and the happiness level is a number out of 10 that 
+                 represents how a sample of a country rated their overall happiness."),
        
-               checkboxGroupInput(
-                   inputId = "correl_years",
-                   label = "Choose Which Years to Show",
-                   choices = c("2015", "2016", "2017"),
-                   selected = "2015",
-                   inline = T
-               ),
-               
-               sliderInput(
-                   inputId = "correl_point_size",
-                   label = "Data Point Size",
-                   min = 1,
-                   max = 10,
-                   value = 2
+               div(
+                   style = "display: inline-block; vertical-align: top; margin: 0 30%",
+                   checkboxGroupInput(
+                       inputId = "correl_years",
+                       label = "Choose Which Years to Show",
+                       choices = c("2015", "2016", "2017"),
+                       selected = "2015",
+                       inline = T
+                   )
                ),
                
                plotOutput("wealth_happy_correl"),
                
-               p("a GOOD and GRAMMATICALLY CORRECT description of your plot"),
-               p("make sure you format and explain what can be done w the widgets")
+               p("We chose to visualize the relationship between wealth and happiness with a scatterplot. The x-axis
+                 represents each country's GDP per capita and the y-axis represents the self-reported happiness of
+                 the country. The colors of the points represent the geographic region the observation belongs to and 
+                 the size of the point represents the population of the country. You can choose which years to view by
+                 checking any combination of years from 2015 to 2017."),
+               
+               br(),
+               
+               p("This graph illustrates that there is a positive relationship between a country's wealth and its
+                 reported happiness. Countries with a higher GDP per capita tend to report a higher happiness level
+                 out of 10.")
       ),
                 
       tabPanel("Income/GDP per Capita vs. Happiness", 
