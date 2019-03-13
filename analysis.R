@@ -17,7 +17,7 @@ library(tibble)
 ###############
 
 # read and process csv file for happiness data
-world_happiness_data <- read.csv(file = "Data/2017.csv", stringsAsFactors = FALSE)
+world_happiness_data <- read.csv(file = "data/2017.csv", stringsAsFactors = FALSE)
 filtered_world_happiness_data <- select(world_happiness_data, Country, Happiness.Rank, Happiness.Score, Economy..GDP.per.Capita.) %>%
   filter(Happiness.Score > 7)
 happiness_col_names <- c("Country Name", "Happiness Rank", "Happiness Score", "Economy")
@@ -92,7 +92,7 @@ average_happiness_income_by_region <- joined_data %>%
   arrange(average_income)
 
 # Join the 2015 and 2017 happiness data
-world_happiness_data_2015 <- read.csv(file = "Data/2015.csv", stringsAsFactors = FALSE)
+world_happiness_data_2015 <- read.csv(file = "data/2015.csv", stringsAsFactors = FALSE)
 world_happiness_2015_2017 <- left_join(world_happiness_data_2015, world_happiness_data, by = "Country")
 
 # Find the difference in economy and happiness in the two years
