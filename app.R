@@ -9,4 +9,3 @@ source("server.R")
 
 # app generated
 shinyApp(ui = ui, server = server)
-

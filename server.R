@@ -18,58 +18,59 @@ library(ggfortify)
 source("analysis.R")
 
 server <- function(input, output) {
+  
+  # Question 1 
+  
+  # function to generate map with correct highlights
   get_world_data_with_highlights <- function(regions_highlight) {
     map_data("world") %>%
       fortify() %>%
       mutate(highlight = ifelse(region %in% regions_highlight, 1, 0))
   }
-
-  # Question 1
-  output$mapcomparison <- renderPlot({
-    # economy map filtering
+  
+  # economy map based on user input 
+  output$economymap <- renderPlot({
     largest_economy_change <- world_happiness_2015_2017 %>%
       arrange(abs(Economy_change)) %>%
       top_n(input$countries) %>%
       select(Country)
-
+    
     largest_economy_change <- unlist(largest_economy_change)
-
+    
     mapping_data <- get_world_data_with_highlights(largest_economy_change)
-
+    
     # economy map generation
-    economy_map <- ggplot() +
+    ggplot() +
       geom_map(
         data = mapping_data,
         map = mapping_data,
-        aes(x = long, y = lat, group = group, map_id = region, fill = highlight, color = "green")
-      ) +
-      theme(legend.position = "none")
-
-    # happiness map filtering
+        aes(x = long, y = lat, group = group, map_id = region, fill = highlight), color = "green") +
+      theme(legend.position = "none") + coord_fixed(ratio=1) +
+      scale_size_continuous(guide = F)
+  })
+  
+  # happiness map based on user input 
+  output$happymap <- renderPlot({
     largest_happiness_change <- world_happiness_2015_2017 %>%
       arrange(abs(Happiness_change)) %>%
       top_n(input$countries) %>%
       select(Country)
-
+    
     largest_happiness_change <- unlist(largest_happiness_change)
-
+    
     mapping_data <- get_world_data_with_highlights(largest_happiness_change)
-
+    
     # happiness map generation
-    happiness_map <- ggplot() +
+    ggplot() +
       geom_map(
         data = mapping_data,
         map = mapping_data,
-        aes(x = long, y = lat, group = group, map_id = region, fill = highlight, color = "green")
-      ) +
-      theme(legend.position = "none")
-
-    # arranging the maps side by side
-    grid.arrange(economy_map, happiness_map, nrow = 1)
+        aes(x = long, y = lat, group = group, map_id = region, fill = highlight), color = "red") +
+      theme(legend.position = "none") + coord_fixed(ratio=1) +
+      scale_size_continuous(guide = F)
   })
 
   # Question 2
-
   output$wealth_happy_correl <- renderPlot({
     years <- input$correl_years
     point_size <- input$correl_point_size * .1
@@ -78,11 +79,9 @@ server <- function(input, output) {
     if ("2015" %in% years) {
       plot <- plot + geom_point(aes(x = economy_2015, y = happiness_2015, color = region, size = pop_2015))
     }
-
     if ("2016" %in% years) {
       plot <- plot + geom_point(aes(x = economy_2016, y = happiness_2016, color = region, size = pop_2016))
     }
-
     if ("2017" %in% years) {
       plot <- plot + geom_point(aes(x = economy_2017, y = happiness_2017, color = region, size = pop_2017))
     }

@@ -7,6 +7,7 @@
 library(shiny)
 library(gridExtra)
 library(plotly)
+
 ui <- fluidPage(
   style = "border: 1px dashed red; padding: 20px 200px; font-family: verdana, helvetica neue; text-align: center",
   div(
@@ -55,14 +56,14 @@ ui <- fluidPage(
       ),
 
       tabPanel(
-        "Economic Changes vs. Happiness",
+        "Drastic Economic Changes Associated with Happiness?",
         br(),
         h1("A Comparison of Economic Changes and Dramatic Shifts in Happiness"),
         p("We were first interested to see if there is any consistent relationship between countries
                               that experienced large changes in economic levels and in their overall happiness index. Use the widgets
                               below to manipulate the visualizations."),
         br(),
-        h4("A Comparison of the Countries w/ Top Economic Changes (left) and Top Changes in Happiness (right)"),
+        h4("A Comparison of the Countries w/ Top Economic Changes and Top Changes in Happiness"),
         br(),
         div(
           style = "text-align: center; display: inline-block",
@@ -74,8 +75,11 @@ ui <- fluidPage(
           )
         ),
         p("Choose how many countries to include by using the slider above. The number that you choose will indicate how many countries
-                 will be highlighted on both maps."),
-        plotOutput("mapcomparison"),
+                 will be highlighted on both maps. Use the tabs to select which map you are interested in seeing."),
+        tabsetPanel(type = "tabs",
+                    tabPanel("drastic economy change", plotOutput("economymap")),
+                    tabPanel("top happiness changes", plotOutput("happymap"))
+        ),
         p("As can be seen in both maps, there is quite a bit of consistency between countries that have drastic changes in their economic
                  status and changes in their happiness index. As the slider is used, the map on the left and the right are nearly identical.
                  Using this alone is not a valid means of declaring that the two are directly associated, but it gives us good reason to 
