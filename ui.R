@@ -4,9 +4,9 @@
 # Section AE
 # March 8, 2019 
 
-library("shiny")
-library("gridExtra")
-
+library(shiny)
+library(gridExtra)
+library(plotly)
 ui <- fluidPage(style = "border: 1px dashed red; padding: 20px 200px; font-family: verdana, helvetica neue; text-align: center",
   div(
     style = "
@@ -31,7 +31,6 @@ ui <- fluidPage(style = "border: 1px dashed red; padding: 20px 200px; font-famil
     style = "padding-top: 0px",
     
     tabsetPanel(type = "pills",
-    # CHANGE THE NAME OF YOUR TAB TO BE ABOUT YOUR TOPIC!!!!! 
       tabPanel("Home",
                style = "margin: auto",
                br(),
@@ -154,15 +153,24 @@ ui <- fluidPage(style = "border: 1px dashed red; padding: 20px 200px; font-famil
                           average happiness than personal wealth.")
       ),
                 
-      tabPanel("Cooper", 
+      tabPanel("Primary Component Analysis", 
+               h1("PCA of World Happiness Index and GDP"),
+               p("This analysis will determine the feature of the data that accounts for the highest variance, or the \"Primary Component\".
+                 This will hopefully give us an insight into what feature most impacts how wealthy a country is.
+                 One of these features compares countries to the hypothetical state of Dystopia, which represents the lowest national averages for all features. 
+                 Is there a relationship between dystopia and the wealth of a country?"),
+               selectInput("pca_region", choices = c("World", "Europe & Central Asia", "North America", "East Asia & Pacific", "Middle East & North Africa", "Latin America & Caribbean", "Sub-Saharan Africa", "South Asia"), selected = "World", label = "Region"),
                br(),
-               h1("Title of Page"),
-               p("an introduction to the question you are asking"),
-               # insert your plot call here
-               # insert the widgets you will need 
-               p("a GOOD and GRAMMATICALLY CORRECT description of your plot"),
-               p("make sure you format and explain what can be done w the widgets")
-        )
+               verbatimTextOutput("selected_country", placeholder = TRUE),
+               plotlyOutput("pca_plot"),
+               br(),
+               verbatimTextOutput("summary"),
+               p("This is a lot to take in, but we can unpack it. First, we see that in the entire world, PC1 (Comp. 1) accounts for about 48% of variability in the data set.
+                 From this, we can conclude that all these variables are positively correlated in PC1.
+                 We can also see that Happiness Score, Economy, Family, and Health are heavily loaded on PC1, meaning that there is likely some factor that makes these variables similar.
+                 In other words, the above four scores produce the maximum variance in the data set.
+                 Similarly, in PC2, we see Economy, Family, and Health are related, but not related to the other 4 features. This means there is a small possibility of an unknown variable affecting the first 3 positively and the rest negatively.")
       )
+    )
   )
 )

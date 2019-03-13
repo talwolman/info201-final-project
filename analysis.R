@@ -5,9 +5,12 @@
 # March 8, 2019 
 
 library(dplyr)
+library(maps)
+library(tidyr)
 library(knitr)
 library(jsonlite)
 library(httr)
+library(tibble)
 
 ###############
 ## Section 2 ##
@@ -144,3 +147,39 @@ colnames(pop_data) <- new_pop_cols
 
 # join population data to wealth and happiness data
 wealth_vs_happiness <- left_join(wealth_vs_happiness, pop_data, by = "country")
+
+#Section 4
+gdp_data <- read.csv(file = "data/gdp.csv", stringsAsFactors = FALSE) %>% 
+  spread(key = Year, value = Value) %>% 
+  select(CountryName, CountryCode, "2016") %>% 
+  na.omit()
+with_iso3 <- world_happiness_crucial_info %>% mutate(iso3 = if_else(Country == "United States", "USA",
+                                                                    if_else(Country == "United Kingdom", "GBR",
+                                                                            iso.alpha(n = 3, x = world_happiness_crucial_info$Country))))
+joined_with_gdp <- left_join(with_iso3[-1], gdp_data, by = c("iso3" = "CountryCode")) %>% 
+  na.omit() %>% 
+  rename(gdp2016 = "2016") %>%
+  left_join(joined_data %>% select(id, region.value), by = c("iso3" = "id"))
+
+dropbox_names <- c("World", unique(joined_with_gdp$region.value)[!is.na(unique(joined_with_gdp$region.value))])
+
+#calculate pca for given region. use 'world' for all
+pca_for_region <- function(region) {
+  res <- ""
+  df <- column_to_rownames(joined_with_gdp %>% filter(iso3 != "NER"), var="CountryName")
+  if (region == "World") {
+  res <- princomp(df %>% select(-iso3, -region.value), cor = TRUE)
+  } else {
+    res <- princomp(df %>% filter(iso3 != "NER") %>% filter(region.value == region) %>% select(-iso3, -gdp2016, -region.value), cor = TRUE)
+  }
+  res
+}
+df_for_region <- function(region) {
+  res <- ""
+  if (region == "World") {
+    res <- joined_with_gdp %>% filter(iso3 != "NER") %>% select(-iso3, -region.value)
+  } else {
+    res <- joined_with_gdp %>% filter(iso3 != "NER") %>% filter(region.value == region) %>% select(-iso3, -region.value)
+  }
+  res
+}

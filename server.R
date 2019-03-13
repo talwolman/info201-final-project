@@ -4,21 +4,20 @@
 # Section AE
 # March 8, 2019 
 
-library("knitr")
-library("jsonlite")
-library("httr")
-library("shiny")
-library("ggplot2")
-library("dplyr")
-library("tidyr")
-library("maps")
+library(knitr)
+library(jsonlite)
+library(httr)
+library(shiny)
+library(ggplot2)
+library(plotly)
+library(dplyr)
+library(tidyr)
+library(maps)
+library(ggfortify)
 
 source("analysis.R")
 
 server <- function(input, output) {
-  # please comment on your code so we know what code corresponds to what problem!! 
-  # thank you! 
-  
   get_world_data_with_highlights <- function(regions_highlight) {
     map_data('world') %>% 
       fortify() %>% 
@@ -156,7 +155,29 @@ server <- function(input, output) {
     plot
   })
   
-  # Cooper - add description of code 
-  # add code here and delete this comment
+  # PCA
+  
+  output$pca_plot <- renderPlotly({
+    df <- df_for_region(input$pca_region)
+    p <- autoplot(pca_for_region(input$pca_region), data = df, colour = 'Score', loadings.label=TRUE, loadings=TRUE, 
+             loadings.label.size=2, loadings.colour='blue',
+             label.size=1) + ggtitle("Principal Component Analysis")
+    ggplotly(p)
+  })
+  
+  output$summary <- renderPrint({
+    pca <- pca_for_region(input$pca_region)
+    print(pca$loadings)
+    summary(pca)
+  })
+  
+  output$selected_country <- renderPrint({
+    e <- event_data("plotly_hover")
+    if (is.null(e)) {
+      cat("Currently hovering:")
+    }
+    req(e) #dont do anything if nothing has been clicked
+    df <- df_for_region(input$pca_region)
+    cat(paste("Currently hovering:", df[e$pointNumber,] %>% select(CountryName)))
+  })
 }
-
