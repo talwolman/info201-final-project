@@ -137,7 +137,7 @@ wealth_vs_happiness <- left_join(happiness_2015, happiness_2016, by = "country")
 wealth_vs_happiness <- left_join(wealth_vs_happiness, happiness_2017, by = "country")
 
 # load and rename world population data
-pop_data <- read.csv("data/world_pop.csv", stringsAsFactors = F) %>% 
+pop_data <- read.csv("data/world_pop.csv", stringsAsFactors = F, fileEncoding = "UTF-8-BOM") %>% 
     select(Country.Name, X2015, X2016, X2017)
 new_pop_cols <- c("country", "pop_2015", "pop_2016", "pop_2017")
 colnames(pop_data) <- new_pop_cols
