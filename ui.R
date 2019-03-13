@@ -142,12 +142,16 @@ ui <- fluidPage(style = "border: 1px dashed red; padding: 20px 200px; font-famil
                
                plotOutput("wealth_graph"),
                 
-               p("The above graph is set up as a line graph because despite the fact that the data is broken up into discrete brackets, 
-                          the data within the brackets is continuous; within each bracket there is a continuous average income and/or conintuous 
-                          GDP per capita. As can be seen by the graph above, happiness increases with both income level and with GDP per capita. However, 
-                          one very interesting things can be seen when the two are compared. The happiness levels for GDP per capita is lower than for 
-                          income on the low/lower middle side, and higher on the higher middle/high side. This could potentially demonstrate that national 
-                          wealth is more important when it comes to average happiness than personal wealth.")
+               p("We chose to visualize the relationship between income level/GDP per captia and happiness as a line graph. We chose to do it this way 
+                          because despite the fact that the data is broken up into discrete brackets, the data within the brackets is continuous; 
+                          within each bracket there is a continuous average income and/or conintuous GDP per capita. In this graph, the x-axis represents 
+                          the bracket that the income/GDP per capita falls into (Low, Lower Middle, Upper Middle, or High). The y-axis represents the average 
+                          happiness of for each bracket."),
+               br(),
+               p("As can be seen by the graph above, happiness increases with both income level and with GDP per capita. However, one very interesting things 
+                          can be seen when the two are compared. The happiness levels for GDP per capita is lower than for income on the low/lower middle side, 
+                          and higher on the higher middle/high side. This could potentially demonstrate that national wealth is more important when it comes to 
+                          average happiness than personal wealth.")
       ),
                 
       tabPanel("Cooper", 
