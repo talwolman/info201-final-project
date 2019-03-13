@@ -5,8 +5,8 @@ account: talwolman
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 787262
-bundleId: 1936877
+bundleId: 1936889
 url: https://talwolman.shinyapps.io/info201-final-project/
-when: 1552493261.44678
+when: 1552493441.17551
 asMultiple: FALSE
 asStatic: FALSE

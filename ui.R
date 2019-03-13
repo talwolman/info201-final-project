@@ -56,7 +56,7 @@ ui <- fluidPage(
       ),
 
       tabPanel(
-        "Drastic Economic Changes vs Happiness?",
+        "Drastic Economic Changes vs Happiness",
         br(),
         h1("A Comparison of Economic Changes and Dramatic Shifts in Happiness"),
         p("We were first interested to see if there is any consistent relationship between countries
