@@ -1,5 +1,5 @@
 # a9 - Info Final Project
-Final project for info 201. Creating data visualizations for compiled data using R and Shiny to support interactive features.
+Final project for info 201. Creating data visualizations for compiled data using R and Shiny to support interactive features. To see the final project, click [here](https://talwolman.shinyapps.io/info201-final-project/)
 
 ## Group Members
 - Tal Wolman
