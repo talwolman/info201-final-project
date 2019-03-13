@@ -95,6 +95,7 @@ server <- function(input, output) {
   # Ivan - add description of code 
   output$wealth_graph <- renderPlot({
     
+    # Get happiness data in baskets based on GDP per capita
     world_happiness_econ <- world_happiness_crucial_info %>%
       select(Score, Economy) %>%
       mutate(incomeLevel.value = cut(as.vector(world_happiness_crucial_info$Economy), 4)) %>%
@@ -104,15 +105,27 @@ server <- function(input, output) {
       mutate(group = "GDP per Capita")
     world_happiness_econ$incomeLevel.value <- factor(world_happiness_econ$incomeLevel.value, levels = c("Low", "Lower Middle", "Upper Middle", "High")) 
     
+    # Get average happiness by income level
     average_happiness_by_income_level <- average_happiness_by_income_level %>%
       mutate(group = "Income") %>%
       mutate(incomeLevel.value = c("Low", "Lower Middle", "Upper Middle", "High"))
     average_happiness_by_income_level$incomeLevel.value <- factor(average_happiness_by_income_level$incomeLevel.value, levels = c("Low", "Lower Middle", "Upper Middle", "High"))
     
+    # Stack the two data frames
     income_and_econ <- rbind(average_happiness_by_income_level, world_happiness_econ)
     
-    if (length(input$wealth_type) == 1 & input$wealth_type == "in"){
-      ggplot(data = average_happiness_by_income_level, aes(x = incomeLevel.value, y = average_happiness, group = group)) +
+    # base plot if nothing selected
+    plot <- plot <- ggplot(income_and_econ) + ggtitle("") +
+      labs(
+        title = "GDP per Capita vs. Happiness",
+        x = "GDP per Capita Bracket",
+        y = "Average Happiness"
+      )
+    
+    wealth <- input$wealth_type
+    
+    if (length(wealth) == 1 & "in" %in% wealth){
+      plot <- ggplot(data = average_happiness_by_income_level, aes(x = incomeLevel.value, y = average_happiness, group = group)) +
         geom_point() + geom_line() +
         labs(
           title = "Income Bracket vs. Happiness",
@@ -120,16 +133,16 @@ server <- function(input, output) {
           y = "Average Happiness"
         )
       
-    } else if (length(input$wealth_type) == 1 & input$wealth_type == "GDP") {
-      ggplot(data = world_happiness_econ, aes(x = incomeLevel.value, y = average_happiness, group = group)) +
+    } else if (length(wealth) == 1 & "GDP" %in% wealth) {
+      plot <- ggplot(data = world_happiness_econ, aes(x = incomeLevel.value, y = average_happiness, group = group)) +
         geom_point() + geom_line() +
         labs(
           title = "GDP per Capita vs. Happiness",
           x = "GDP per Capita Bracket",
           y = "Average Happiness"
         )
-    } else {
-      ggplot(data = income_and_econ, aes(x = incomeLevel.value, y = average_happiness, color = group, group = group)) +
+    } else if (length(wealth) == 2) {
+      plot <- ggplot(data = income_and_econ, aes(x = incomeLevel.value, y = average_happiness, color = group, group = group)) +
         geom_point() + geom_line() +
         labs(
           title = "Income Bracket & GDP per Capita vs. Happiness",
@@ -137,7 +150,10 @@ server <- function(input, output) {
           x = "Income/GDP per Capita Bracket",
           y = "Average Happiness"
         )
-    }
+    } 
+    
+    # return plot
+    plot
   })
   
   # Cooper - add description of code 

@@ -136,11 +136,12 @@ ui <- fluidPage(style = "border: 1px dashed red; padding: 20px 200px; font-famil
                  checkboxGroupInput(inputId = "wealth_type",
                                     label = "Choose wealth type:",
                                     choices = c("Income Bracket" = "in",
-                                                "GDP per Capita Bracket" = "GDP"))
+                                                "GDP per Capita Bracket" = "GDP"),
+                                    selected = "in")
                ),
                
                plotOutput("wealth_graph"),
-               # insert the widgets you will need 
+                
                p("The above graph is set up as a line graph because despite the fact that the data is broken up into discrete brackets, 
                           the data within the brackets is continuous; within each bracket there is a continuous average income and/or conintuous 
                           GDP per capita. As can be seen by the graph above, happiness increases with both income level and with GDP per capita. However, 
