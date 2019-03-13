@@ -14,6 +14,6 @@ We are doing this by answering four basic questions:
 1. Is a dramatic change in the economic situation of a country also reflected in the happiness of that country?
 2. Is there a correlation between the wealth and happiness of the different regions around the country? Are happier regions also necessarily wealthier?
 3. What is the relationship between income bracket (Low, Lower Middle, Upper Middle, and High) and average happiness? What about for the brackets for GDP per capita? Does personal wealth (income) or national wealth (GDP per capita) have a stronger relationship with happiness?
-4.
+4. How do the different factors of happiness covary? What would a Primary Factor Analysis look like? What would it tell us about the data set?
 
 Each of these questions is answered and accompanied with an interactive visualization in order to allow users to understand the information more easily and more deeply. 

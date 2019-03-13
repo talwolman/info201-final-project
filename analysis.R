@@ -1,8 +1,8 @@
 # Tal Wolman, Ben Weber, Ivan Trindev, Cooper Teixeira
 # INFO 201 Final Project
-# TA: Andrey Butenko 
+# TA: Andrey Butenko
 # Section AE
-# March 8, 2019 
+# March 8, 2019
 
 library(dplyr)
 library(maps)
@@ -54,15 +54,15 @@ world_happiness_summary <- summary(world_happiness_crucial_info %>% select(-Coun
 
 # Create a numeric representation of the income levels of countries
 data_for_world_ex <- data_for_world %>% mutate(income_as_numeric = ifelse(grepl("HIC", incomeLevel.id), "6",
-                                                                          ifelse(grepl("UMC", incomeLevel.id), 5,
-                                                                                 ifelse(grepl("MIC", incomeLevel.id), 4,
-                                                                                        ifelse(grepl("LMC", incomeLevel.id), 3,
-                                                                                               ifelse(grepl("LMY", incomeLevel.id), 2,
-                                                                                                      ifelse(grepl("LIC", incomeLevel.id), 1, NA)
-                                                                                               )
-                                                                                        )
-                                                                                 )
-                                                                          )
+  ifelse(grepl("UMC", incomeLevel.id), 5,
+    ifelse(grepl("MIC", incomeLevel.id), 4,
+      ifelse(grepl("LMC", incomeLevel.id), 3,
+        ifelse(grepl("LMY", incomeLevel.id), 2,
+          ifelse(grepl("LIC", incomeLevel.id), 1, NA)
+        )
+      )
+    )
+  )
 ))
 data_for_world_ex$income_as_numeric <- as.numeric(data_for_world_ex$income_as_numeric)
 world_income_summary <- summary(data_for_world_ex %>% select(income_as_numeric) %>% na.omit())
@@ -118,20 +118,20 @@ largest_economy_change <- world_happiness_2015_2017 %>%
   as.vector()
 
 # select and rename necessary columns for 2015 happiness data
-happiness_2015 <- read.csv("data/2015.csv", stringsAsFactors = F) %>% 
-    select(Country, Region, Happiness.Score, Economy..GDP.per.Capita.)
+happiness_2015 <- read.csv("data/2015.csv", stringsAsFactors = F) %>%
+  select(Country, Region, Happiness.Score, Economy..GDP.per.Capita.)
 cols_2015 <- c("country", "region", "happiness_2015", "economy_2015")
 colnames(happiness_2015) <- cols_2015
-    
+
 # select and rename necessary columns for 2016 happiness data
-happiness_2016 <- read.csv("data/2016.csv", stringsAsFactors = F) %>% 
-    select(Country, Happiness.Score, Economy..GDP.per.Capita.)
+happiness_2016 <- read.csv("data/2016.csv", stringsAsFactors = F) %>%
+  select(Country, Happiness.Score, Economy..GDP.per.Capita.)
 cols_2016 <- c("country", "happiness_2016", "economy_2016")
 colnames(happiness_2016) <- cols_2016
-    
+
 # select and rename necessary columns for 2017 happiness data
-happiness_2017 <- read.csv("data/2017.csv", stringsAsFactors = F) %>% 
-    select(Country, Happiness.Score, Economy..GDP.per.Capita.)
+happiness_2017 <- read.csv("data/2017.csv", stringsAsFactors = F) %>%
+  select(Country, Happiness.Score, Economy..GDP.per.Capita.)
 cols_2017 <- c("country", "happiness_2017", "economy_2017")
 colnames(happiness_2017) <- cols_2017
 
@@ -140,35 +140,40 @@ wealth_vs_happiness <- left_join(happiness_2015, happiness_2016, by = "country")
 wealth_vs_happiness <- left_join(wealth_vs_happiness, happiness_2017, by = "country")
 
 # load and rename world population data
-pop_data <- read.csv("data/world_pop.csv", stringsAsFactors = F, fileEncoding = "UTF-8-BOM") %>% 
-    select(Country.Name, X2015, X2016, X2017)
+pop_data <- read.csv("data/world_pop.csv", stringsAsFactors = F, fileEncoding = "UTF-8-BOM") %>%
+  select(Country.Name, X2015, X2016, X2017)
 new_pop_cols <- c("country", "pop_2015", "pop_2016", "pop_2017")
 colnames(pop_data) <- new_pop_cols
 
 # join population data to wealth and happiness data
 wealth_vs_happiness <- left_join(wealth_vs_happiness, pop_data, by = "country")
 
-#Section 4
-gdp_data <- read.csv(file = "data/gdp.csv", stringsAsFactors = FALSE) %>% 
-  spread(key = Year, value = Value) %>% 
-  select(CountryName, CountryCode, "2016") %>% 
+
+# read gdp data table and condense
+gdp_data <- read.csv(file = "data/gdp.csv", stringsAsFactors = FALSE) %>%
+  spread(key = Year, value = Value) %>%
+  select(CountryName, CountryCode, "2016") %>%
   na.omit()
-with_iso3 <- world_happiness_crucial_info %>% mutate(iso3 = if_else(Country == "United States", "USA",
-                                                                    if_else(Country == "United Kingdom", "GBR",
-                                                                            iso.alpha(n = 3, x = world_happiness_crucial_info$Country))))
-joined_with_gdp <- left_join(with_iso3[-1], gdp_data, by = c("iso3" = "CountryCode")) %>% 
-  na.omit() %>% 
+
+# add iso3 codes
+with_iso3 <- world_happiness_crucial_info %>% mutate(iso3 = if_else(Country == "United States", "USA", # irregular naming
+  if_else(Country == "United Kingdom", "GBR", # irregular naming
+    iso.alpha(n = 3, x = world_happiness_crucial_info$Country)
+  )
+))
+
+
+joined_with_gdp <- left_join(with_iso3[-1], gdp_data, by = c("iso3" = "CountryCode")) %>%
+  na.omit() %>%
   rename(gdp2016 = "2016") %>%
   left_join(joined_data %>% select(id, region.value), by = c("iso3" = "id"))
 
-dropbox_names <- c("World", unique(joined_with_gdp$region.value)[!is.na(unique(joined_with_gdp$region.value))])
-
-#calculate pca for given region. use 'world' for all
+# calculate pca for given region. use 'World' for all
 pca_for_region <- function(region) {
   res <- ""
-  df <- column_to_rownames(joined_with_gdp %>% filter(iso3 != "NER"), var="CountryName")
+  df <- column_to_rownames(joined_with_gdp %>% filter(iso3 != "NER"), var = "CountryName") # nigeria has a duplicate. no idea why
   if (region == "World") {
-  res <- princomp(df %>% select(-iso3, -region.value), cor = TRUE)
+    res <- princomp(df %>% select(-iso3, -region.value), cor = TRUE)
   } else {
     res <- princomp(df %>% filter(iso3 != "NER") %>% filter(region.value == region) %>% select(-iso3, -gdp2016, -region.value), cor = TRUE)
   }
